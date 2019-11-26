@@ -401,3 +401,79 @@ function keyReleased () {
 	dir=1;
 }
 
+
+
+
+
+
+function pushAButton () {
+
+
+	//left-arrow
+	if (result == 0) {
+		auxX=BX;
+		auxY=BY-1;
+		if(matriz[auxX][auxY]===3){
+			auxVal=matriz[auxX][auxY];
+			matriz[auxX][auxY]=matriz[BX][BY];
+			matriz[BX][BY]=auxVal;
+		}
+		dir=0;
+	}
+	//right-arrow
+	if (result == 1) {
+		auxX=BX;
+		auxY=BY+1;
+		if(matriz[auxX][auxY]===3){
+			auxVal=matriz[auxX][auxY];
+			matriz[auxX][auxY]=matriz[BX][BY];
+			matriz[BX][BY]=auxVal;
+		}	
+		dir=2;
+	}
+	//up-arrow
+	if (result == 2) {
+		auxX=BX-1;
+		auxY=BY;
+		if(matriz[auxX][auxY]===3){
+			auxVal=matriz[auxX][auxY];
+			matriz[auxX][auxY]=matriz[BX][BY];
+			matriz[BX][BY]=auxVal;
+		}
+		dir=3;
+	}
+
+	//down-arrow
+	if (result == 3) {
+		auxX=BX+1;
+		auxY=BY;
+		if(matriz[auxX][auxY]===3){
+			auxVal=matriz[auxX][auxY];
+			matriz[auxX][auxY]=matriz[BX][BY];
+			matriz[BX][BY]=auxVal;
+		}
+		dir=4;
+	}
+
+
+	//bomba
+	if (result == 4){
+		if (matriz[BX][BY+1]===3) {
+			matriz[BX][BY+1]=matriz[BX][BY];
+			matriz[BX][BY]=5;
+			setTimeout(bomba,2000,BX,BY);
+		}else if(matriz[BX][BY-1]===3){
+			matriz[BX][BY-1]=matriz[BX][BY];
+			matriz[BX][BY]=5;
+			setTimeout(bomba,2000,BX,BY);
+		}else if(matriz[BX+1][BY]===3){
+			matriz[BX+1][BY]=matriz[BX][BY];
+			matriz[BX][BY]=5;
+			setTimeout(bomba,2000,BX,BY);
+		}else if(matriz[BX-1][BY]===3){
+			matriz[BX-1][BY]=matriz[BX][BY];
+			matriz[BX][BY]=5;
+			setTimeout(bomba,2000,BX,BY);
+		}
+	}
+}

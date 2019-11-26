@@ -1,4 +1,5 @@
-
+const classifier = knnClassifier.create();
+let net;
 let video = null;
 let canvas = null;
 let photo = null;
@@ -6,25 +7,30 @@ let imgButtons = [];
 let samples = [[],[],[],[],[],[]];
 const widthInput = 244;    
 const heightInput = 244;
-var label;
-
+let result;
+let loadNet = false;
 
 let sampleA = [];
 async function loopMl(){
-
 	ativarCamera();
 
-	const classifier = knnClassifier.create();
-  	mbNet = await mobilenet.load()
+	net = await mobilenet.load()
+	loadNet = true;
+	console.log("load net")
 
-	while(true){
-		capturarImagem();
-		label = await classificar(photo);
-	  	//console.log(label[0].className);
-	  	//pushAButton();
-	}
+	setInterval(classificar, 300);
 }
 
+async function classificar( ){
+	if (classifier.getNumClasses() > 0) {
+		capturarImagem();
+		const activation = net.infer(photo, 'conv_preds');
+		result = await classifier.predictClass(activation);
+		result = result.label
+		console.log(result)
+		pushAButton ()
+	}
+}
 
 function ativarCamera() {     
 
@@ -58,104 +64,42 @@ function ativarCamera() {
 //captura um frame da camera
 function capturarImagem() {
 	var context = canvas.getContext('2d');
+	//console.log("contexto")
+	//console.log(context)
 	context.drawImage(video, 0, 0, 244, 244);
   
 	var data = canvas.toDataURL('image/png');
-	photo.setAttribute('src', data);	
+	//console.log("url")
+	//console.log(canvas.toDataURL('image/png'));
+	//console.log("data")
+	//console.log(data);
+
+	photo.setAttribute('src', data);
+
+	//console.log("photo")
+	//console.log(photo)
+	//console.log("end")
 }
 
 
-function classificar(imageInput) {
-  return mbNet.classify(imageInput);
-}
-
-
-function pushAButton () {
-
-	if (label[0].className == "nail" ) {
-		auxX=BX;
-		auxY=BY-1;
-		if(matriz[auxX][auxY]===3){
-			auxVal=matriz[auxX][auxY];
-			matriz[auxX][auxY]=matriz[BX][BY];
-			matriz[BX][BY]=auxVal;
-		}
-	}
-
-	if (label[0].className == "nail") {
-		auxX=BX;
-		auxY=BY+1;
-		if(matriz[auxX][auxY]===3){
-			auxVal=matriz[auxX][auxY];
-			matriz[auxX][auxY]=matriz[BX][BY];
-			matriz[BX][BY]=auxVal;
-		}	
-	}
-
-	if (label[0].className == "nail") {
-		auxX=BX-1;
-		auxY=BY;
-		if(matriz[auxX][auxY]===3){
-			auxVal=matriz[auxX][auxY];
-			matriz[auxX][auxY]=matriz[BX][BY];
-			matriz[BX][BY]=auxVal;
-		}
-	}
-
-	if (label[0].className == "nail") {
-		auxX=BX+1;
-		auxY=BY;
-		if(matriz[auxX][auxY]===3){
-			auxVal=matriz[auxX][auxY];
-			matriz[auxX][auxY]=matriz[BX][BY];
-			matriz[BX][BY]=auxVal;
-		}
-	}
-
-	if(label[0].className == "nail"){
-		dir=0;
-	}
-
-	if(label[0].className == "nail"){
-		dir=2;
-	}
-
-	if (label[0].className == "nail") {
-		dir=3;
-	}
-
-	if (label[0].className == "nail") {
-		dir=4;
-	}
-	if (label[0].className == "nail"){
-		if (matriz[BX][BY+1]===3) {
-			matriz[BX][BY+1]=matriz[BX][BY];
-			matriz[BX][BY]=5;
-			setTimeout(bomba,2000,BX,BY);
-		}else if(matriz[BX][BY-1]===3){
-			matriz[BX][BY-1]=matriz[BX][BY];
-			matriz[BX][BY]=5;
-			setTimeout(bomba,2000,BX,BY);
-		}else if(matriz[BX+1][BY]===3){
-			matriz[BX+1][BY]=matriz[BX][BY];
-			matriz[BX][BY]=5;
-			setTimeout(bomba,2000,BX,BY);
-		}else if(matriz[BX-1][BY]===3){
-			matriz[BX-1][BY]=matriz[BX][BY];
-			matriz[BX][BY]=5;
-			setTimeout(bomba,2000,BX,BY);
-		}
-	}
-}
 
 //ativa botoes que capturam samples das classes
 function ativarBotao( butaoId){
-    capturarImagem()
-  
+	if(!loadNet){
+		return
+	}
+
+	capturarImagem();
+
+	const activation = net.infer(photo, 'conv_preds');
+	classifier.addExample(activation, butaoId);
+
+  //console.log(classifier.getClassExampleCount());
+
     //atualizando imagem encima do botao
 	var data = canvas.toDataURL('image/png');
     imgButtons[butaoId].setAttribute('src', data);
-
-    //salvando em samples
-    samples[butaoId].push(data);
+//
+    ////salvando em samples
+    //samples[butaoId].push(data);
 }
