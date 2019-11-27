@@ -9,6 +9,24 @@
 
     <title>Product example for Bootstrap</title>
 
+    <script type="text/javascript" src="bower_components/EaselJS/lib/easeljs-0.8.1.min.js"></script>
+    <script type="text/javascript" src="bower_components/PreloadJS/lib/preloadjs-0.6.1.min.js"></script>
+    <script type="text/javascript" src="bower_components/SoundJS/lib/soundjs-0.6.1.min.js"></script>
+    <script type="text/javascript" src="js/core.js"></script>
+    <script type="text/javascript" src="js/Utils.js"></script>
+    <script type="text/javascript" src="js/Entity.js"></script>
+    <script type="text/javascript" src="js/Player.js"></script>
+    <script type="text/javascript" src="js/Bot.js"></script>
+    <script type="text/javascript" src="js/Bonus.js"></script>
+    <script type="text/javascript" src="js/Tile.js"></script>
+    <script type="text/javascript" src="js/Fire.js"></script>
+    <script type="text/javascript" src="js/Bomb.js"></script>
+    <script type="text/javascript" src="js/Menu.js"></script>
+    <script type="text/javascript" src="js/InputEngine.js"></script>
+    <script type="text/javascript" src="js/GameEngine.js"></script>
+    <script src="/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="directKeys.js"></script>
+
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"> </script>
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
     <script src="https://unpkg.com/@tensorflow-models/knn-classifier"></script>
@@ -23,7 +41,7 @@
 
   </head>
 
-  <body style="background-image: url('http://urci.org.br/wp-content/uploads/2017/05/plano-fundo.png'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+  <body onload="gGameEngine.load()" style="background-image: url('http://urci.org.br/wp-content/uploads/2017/05/plano-fundo.png'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
 
     <div class="container" >
 
@@ -35,8 +53,8 @@
 
       <div class="row mt-1">
         <!--O jogo fica aqui-->
-        <div class="col col-lg-7" id="sketch-holder">
-          
+        <div class="col col-lg-7" id="game">
+          <canvas id="canvas" width="545" height="416"></canvas>
         </div>
 
         <!--WEBCAN-->
@@ -60,70 +78,68 @@
       <div class="row mt-2" >
         <!--Comando 1-->
         <div class="col col-lg-2">
-          <img id="img-0" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
-
           <div class="row justify-content-md-center mt-1">
             <div class="col col-lg-5">
               <button type="button" class="btn btn-light btn-sm" id="a" onclick="ativarBotao(0)">Esquerda</button>
             </div>
           </div>
+
+          <img id="img-0" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
+
         </div>
 
         <!--Comando 2-->
         <div class="col col-lg-2">
-          <img id="img-1" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
-
           <div class="row justify-content-md-center mt-1">
             <div class="col col-lg-5">
               <button type="button" class="btn btn-light btn-sm" id="class-b" onclick="ativarBotao(1)">Direita</button>
             </div>
           </div>
+
+          <img id="img-1" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
         </div>
 
         <!--Comando 3-->
         <div class="col col-lg-2">
-          <img id="img-2" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
-
           <div class="row justify-content-md-center mt-1">
             <div class="col col-lg-5">
               <button type="button" class="btn btn-light btn-sm" id="class-c" onclick="ativarBotao(2)">Cima</button>
             </div>
           </div>
+
+          <img id="img-2" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
         </div>
 
         <!--Comando 4-->
         <div class="col col-lg-2">
-          <img id="img-3" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
-
           <div class="row justify-content-md-center mt-1">
-            <div class="col col-lg-5">
-              <button type="button" class="btn btn-light btn-sm" id="class-d" onclick="ativarBotao(3)">Baixo</button>
-            </div>
+              <div class="col col-lg-5">
+                <button type="button" class="btn btn-light btn-sm" id="class-d" onclick="ativarBotao(3)">Baixo</button>
+              </div>
           </div>
+          <img id="img-3" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
         </div>
 
         <!--Comando 5-->
         <div class="col col-lg-2">
-          <img id="img-4" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
-
           <div class="row justify-content-md-center mt-1">
-            <div class="col col-lg-5">
-              <button type="button" class="btn btn-light btn-sm" id="class-e" onclick="ativarBotao(4)">Bomba</button>
-            </div>
+              <div class="col col-lg-5">
+                <button type="button" class="btn btn-light btn-sm" id="class-e" onclick="ativarBotao(4)">Bomba</button>
+              </div>
           </div>
+
+          <img id="img-4" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
         </div>
 
         <!--Comando 6-->
         <div class="col col-lg-2">
-          <img id="img-5" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
-
           <div class="row justify-content-md-center mt-1">
-            <div class="col col-lg-5">
-              <button type="button" class="btn btn-light btn-sm" id="class-f" onclick="ativarBotao(5)">Parado</button>
+              <div class="col col-lg-5">
+                <button type="button" class="btn btn-light btn-sm" id="class-f" onclick="ativarBotao(5)">Parado</button>
+              </div>
             </div>
-          </div>
-        </div>
 
+          <img id="img-5" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
     </div>
 
     <div style="height:10px"></div>
@@ -131,7 +147,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   <div class="frameAtual">
-	  <canvas id="canvas">
+	  <canvas id="canvass">
 	  </canvas>
 	  <img id="photo" width=244 height=244 alt="The screen capture will appear in this box."> 
 	</div>

@@ -11,6 +11,7 @@ let result;
 let loadNet = false;
 
 let sampleA = [];
+
 async function loopMl(){
 	ativarCamera();
 
@@ -18,8 +19,9 @@ async function loopMl(){
 	loadNet = true;
 	console.log("load net")
 
-	setInterval(classificar, 300);
+	setInterval(classificar, 200);
 }
+
 
 async function classificar( ){
 	if (classifier.getNumClasses() > 0) {
@@ -28,14 +30,14 @@ async function classificar( ){
 		result = await classifier.predictClass(activation);
 		result = result.label
 		console.log(result)
-		pushAButton ()
+		pushButton(result);
 	}
 }
 
 function ativarCamera() {     
 
 	video = document.getElementById('video');
-	canvas = document.getElementById('canvas');
+	canvas = document.getElementById('canvass');
     photo = document.getElementById('photo');
 
     

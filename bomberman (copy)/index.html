@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Product example for Bootstrap</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"> </script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
+    <script src="https://unpkg.com/@tensorflow-models/knn-classifier"></script>
+	<script src="libraries/p5.js"></script>
+	<script src="libraries/p5.dom.js"></script>
+	<script src="libraries/p5.sound.js"></script>
+  <script src="sketch.js"></script>
+  <script src="ml.js"></script>
+    
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+
+  <body style="background-image: url('http://urci.org.br/wp-content/uploads/2017/05/plano-fundo.png'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+
+    <div class="container" >
+
+      <div class="row justify-content-md-center mt-1">
+        <div class="col col-lg-1">
+          <img src="http://www.lapix.ufsc.br/wp-content/uploads/2018/04/q8sc1KuZ_400x400.jpg" alt="..." class="img-fluid">
+        </div>
+      </div>
+
+      <div class="row mt-1">
+        <!--O jogo fica aqui-->
+        <div class="col col-lg-7" id="sketch-holder">
+          
+        </div>
+
+        <!--WEBCAN-->
+        <div class="col col-lg-5">
+          <div class="row justify-content-md-center">
+            <div class="col col-lg-8">
+              <video id="video" class="img-thumbnail" height="1000">Video stream not available.</video>
+
+ 
+          </div>
+          
+
+          <div class="row mt-1 ">
+            <p class="mx-2 bg-warning text-dark border border-white rounded-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet orci velit. Sed molestie tortor at nisl aliquam porttitor. Nunc vel ligula volutpat neque.</p>
+          </div>
+        </div>
+
+      </div>
+
+    <!--Os seis comandos, com imagens e botoes-->
+      <div class="row mt-2" >
+        <!--Comando 1-->
+        <div class="col col-lg-2">
+          <img id="img-0" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
+
+          <div class="row justify-content-md-center mt-1">
+            <div class="col col-lg-5">
+              <button type="button" class="btn btn-light btn-sm" id="a" onclick="ativarBotao(0)">Esquerda</button>
+            </div>
+          </div>
+        </div>
+
+        <!--Comando 2-->
+        <div class="col col-lg-2">
+          <img id="img-1" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
+
+          <div class="row justify-content-md-center mt-1">
+            <div class="col col-lg-5">
+              <button type="button" class="btn btn-light btn-sm" id="class-b" onclick="ativarBotao(1)">Direita</button>
+            </div>
+          </div>
+        </div>
+
+        <!--Comando 3-->
+        <div class="col col-lg-2">
+          <img id="img-2" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
+
+          <div class="row justify-content-md-center mt-1">
+            <div class="col col-lg-5">
+              <button type="button" class="btn btn-light btn-sm" id="class-c" onclick="ativarBotao(2)">Cima</button>
+            </div>
+          </div>
+        </div>
+
+        <!--Comando 4-->
+        <div class="col col-lg-2">
+          <img id="img-3" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
+
+          <div class="row justify-content-md-center mt-1">
+            <div class="col col-lg-5">
+              <button type="button" class="btn btn-light btn-sm" id="class-d" onclick="ativarBotao(3)">Baixo</button>
+            </div>
+          </div>
+        </div>
+
+        <!--Comando 5-->
+        <div class="col col-lg-2">
+          <img id="img-4" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
+
+          <div class="row justify-content-md-center mt-1">
+            <div class="col col-lg-5">
+              <button type="button" class="btn btn-light btn-sm" id="class-e" onclick="ativarBotao(4)">Bomba</button>
+            </div>
+          </div>
+        </div>
+
+        <!--Comando 6-->
+        <div class="col col-lg-2">
+          <img id="img-5" src="https://secure.img1-fg.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" alt="..." class="img-thumbnail">
+
+          <div class="row justify-content-md-center mt-1">
+            <div class="col col-lg-5">
+              <button type="button" class="btn btn-light btn-sm" id="class-f" onclick="ativarBotao(5)">Parado</button>
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <div style="height:10px"></div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <div class="frameAtual">
+	  <canvas id="canvas">
+	  </canvas>
+	  <img id="photo" width=244 height=244 alt="The screen capture will appear in this box."> 
+	</div>
+
+
+  </body>
+</html>
