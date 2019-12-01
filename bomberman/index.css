@@ -1,3 +1,10 @@
 .frameAtual {
     visibility: hidden;
   }
+.grid-container {
+  display: grid;
+}
+
+[invisivel=true]{
+  visibility: hidden;
+}

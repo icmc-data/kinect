@@ -1,16 +1,24 @@
+//modelos
 const classifier = knnClassifier.create();
 let net;
+
+//partições do html
 let video = null;
 let canvas = null;
 let photo = null;
-let imgButtons = [];
-let samples = [[],[],[],[],[],[]];
+let Imgbuttons = []
+let buttons = []
+
+//configurações
+let numSamplesPerClick = 6
+let tempoCapturaSample = 150
+let tempoPrimeiraCapturaSample = 300
 const widthInput = 244;    
 const heightInput = 244;
-let result;
-let loadNet = false;
 
-let sampleA = [];
+let result;//label atual
+let loadNet = false;
+let sampleA = [];//samples salvas
 
 async function loopMl(){
 	ativarCamera();
@@ -18,6 +26,12 @@ async function loopMl(){
 	net = await mobilenet.load()
 	loadNet = true;
 	console.log("load net")
+
+	for(let i=0;i<6;i++){
+		buttons.push(document.getElementById('button-'+i));
+		buttons[i].setAttribute("invisivel",false);
+    }
+
 
 	setInterval(classificar, 200);
 }
@@ -29,7 +43,7 @@ async function classificar( ){
 		const activation = net.infer(photo, 'conv_preds');
 		result = await classifier.predictClass(activation);
 		result = result.label
-		console.log(result)
+		//console.log(result)
 		pushButton(result);
 	}
 }
@@ -42,10 +56,8 @@ function ativarCamera() {
 
     
     for(let i=0;i<6;i++){
-        imgButtons.push(document.getElementById('img-'+i));
+        Imgbuttons.push(document.getElementById('img-'+i));
     }
-
-
 
 	
 	//ativando a camera
@@ -59,6 +71,11 @@ function ativarCamera() {
 	video.setAttribute('height', heightInput);
 	canvas.setAttribute('width', widthInput);
 	canvas.setAttribute('height', heightInput);
+	for(let i=0;i<6;i++){
+		let divImg = document.getElementById("img-"+i);
+		divImg.setAttribute('width', widthInput);
+		divImg.setAttribute('height', heightInput);
+	}
 
 }
 
@@ -66,42 +83,30 @@ function ativarCamera() {
 //captura um frame da camera
 function capturarImagem() {
 	var context = canvas.getContext('2d');
-	//console.log("contexto")
-	//console.log(context)
 	context.drawImage(video, 0, 0, 244, 244);
   
 	var data = canvas.toDataURL('image/png');
-	//console.log("url")
-	//console.log(canvas.toDataURL('image/png'));
-	//console.log("data")
-	//console.log(data);
-
 	photo.setAttribute('src', data);
-
-	//console.log("photo")
-	//console.log(photo)
-	//console.log("end")
 }
 
 
-
+botaoAtivo = [false,false,false,false,false,false]
 //ativa botoes que capturam samples das classes
-function ativarBotao( butaoId){
+function ativarBotao( botaoId){
 	if(!loadNet){
 		return
 	}
+	if(botaoAtivo[botaoId] == false){
+		capturarImagem();
 
-	capturarImagem();
-
-	const activation = net.infer(photo, 'conv_preds');
-	classifier.addExample(activation, butaoId);
-
-  //console.log(classifier.getClassExampleCount());
-
-    //atualizando imagem encima do botao
-	var data = canvas.toDataURL('image/png');
-    imgButtons[butaoId].setAttribute('src', data);
-//
-    ////salvando em samples
-    //samples[butaoId].push(data);
+		//colocando no knn
+		const activation = net.infer(photo, 'conv_preds');
+		classifier.addExample(activation, botaoId);
+	
+		//atualizando imagem encima do botao
+		var data = canvas.toDataURL('image/png');
+		Imgbuttons[botaoId].setAttribute('src', data);
+	}
 }
+
+

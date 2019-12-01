@@ -48,7 +48,7 @@ function pushButtonPress(result){
 	for(var i = 0; i < buttonsPress.length;i++){
 		KeyRelease(buttonsPress[i]);
 	}
-	console.log(result)
+	
 	if(result < buttonsPress.length){
 		
 		KeyPress(buttonsPress[result]);
