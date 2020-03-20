@@ -41,7 +41,7 @@
 
   </head>
 
-  <body onload="gGameEngine.load()" style="background-image: url('http://urci.org.br/wp-content/uploads/2017/05/plano-fundo.png'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+  <body onload="gGameEngine.load()" style="background-color:rgb(16, 35, 146)">
 
     <div class="container" >
 
@@ -70,7 +70,7 @@
           
 
           <div class="row mt-1 ">
-            <p class="mx-2 bg-warning text-dark border border-white rounded-lg">Projeto desenvolvido pelos seguintes membros do Data: João Victor Garcia Coelho, Luan Ícaro Pinto Arcanjo, Gustavo Sasaki Roncaglia e Gustavo Sutter.</p>
+            <p class="mx-2 px-2 text-dark border border-white rounded-lg" style="background-color: rgb(255, 47, 245);">Projeto desenvolvido pelos seguintes membros do Data: <br>João Victor Garcia Coelho<br> Luan Ícaro Pinto Arcanjo <br>Gustavo Sasaki Roncaglia <br> Gustavo Sutter.</p>
           </div>
         </div>
 
@@ -81,7 +81,7 @@
       <div class="row mt-2" >
         <!--Comando 1-->
         <div class="col col-lg-2.4">
-          <div class="row justify-content-md-center mt-1">
+          <div class="row justify-content-md-center my-1">
             <div class="col col-lg-5">
               <button type="button" class="btn btn-light btn-sm" id="button-0" onclick="ativarBotao(0)" invisivel=true>Esquerda</button>
             </div>
@@ -93,7 +93,7 @@
 
         <!--Comando 2-->
         <div class="col col-lg-2.4">
-          <div class="row justify-content-md-center mt-1">
+          <div class="row justify-content-md-center my-1">
             <div class="col col-lg-5">
               <button type="button" class="btn btn-light btn-sm" id="button-1" onclick="ativarBotao(1)" invisivel=true>Direita</button>
             </div>
@@ -104,7 +104,7 @@
 
         <!--Comando 3-->
         <div class="col col-lg-2.4">
-          <div class="row justify-content-md-center mt-1">
+          <div class="row justify-content-md-center my-1">
             <div class="col col-lg-5">
               <button type="button" class="btn btn-light btn-sm" id="button-2" onclick="ativarBotao(2)" invisivel=true>Cima</button>
             </div>
@@ -115,7 +115,7 @@
 
         <!--Comando 4-->
         <div class="col col-lg-2.4">
-          <div class="row justify-content-md-center mt-1">
+          <div class="row justify-content-md-center my-1">
               <div class="col col-lg-5">
                 <button type="button" class="btn btn-light btn-sm" id="button-3" onclick="ativarBotao(3)" invisivel=true>Baixo</button>
               </div>
@@ -125,7 +125,7 @@
 
         <!--Comando 5-->
         <div class="col col-lg-2.4">
-          <div class="row justify-content-md-center mt-1">
+          <div class="row justify-content-md-center my-1">
               <div class="col col-lg-5">
                 <button type="button" class="btn btn-light btn-sm" id="button-4" onclick="ativarBotao(4)" invisivel=true>Bomba</button>
               </div>
@@ -136,7 +136,7 @@
 
         <!--Comando 6-->
         <div class="col col-lg-2.4">
-          <div class="row justify-content-md-center mt-1">
+          <div class="row justify-content-md-center my-1">
               <div class="col col-lg-5">
                 <button type="button" class="btn btn-light btn-sm" id="button-5" onclick="ativarBotao(5)" invisivel=true>Parado</button>
               </div>
@@ -145,9 +145,21 @@
           <img id="img-5" src="img/logoData.jpg" alt="..." class="img-thumbnail">
         </div>
     </div>
-
-    <div style="height:100px"></div>
-
+    
+    <div class="row mt-4" style="color:white" >
+        <h1><strong>Como Jogar</strong></h1>
+    </div>
+    <div class="row" style="font-size: large; color: white;">
+      <p>Para se jogar é necessário ter uma webcam/camera conectado, certifique-se de ter dado permissão à pagina de utilizar a webcan.</p>
+      <br>
+      <p>Para se jogar, escolha uma posição para cada um dois seis movimentos acima, ao se escolher uma posição para um movimento, 
+        se mantenha na posição e clique algumas vezes botão correspondente. Após escolhidos as posições clique para iniciar o jogo, 
+        o player irá se mover de acordo com as sua posição atual.</p>
+      <br>
+      <p>Posições muito parecidas podem ocasionar em má predição dos movimentos, tome cuidado com isto!!! </p>
+      <br>
+      <p>Para se mudar as posições é necessário recarregar a página, não adianta só atualizar os botões com novas posições</p>
+    </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   <div class="frameAtual">
