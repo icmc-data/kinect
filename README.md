@@ -14,7 +14,7 @@ Installation
 3. Make sure you have `bower` and `simplehttpserver` installed: ```npm install -g bower simplehttpserver```
 3. Download dependencies: ```bower install```
 4. Run the HTTP server: ```simplehttpserver```
-5. Launch http://127.0.0.1:8000is a game by 
+5. Launch http://127.0.0.1:8000 
 
 
 The game was made by git ```clone https://github.com/MattSkala/html5-bombergirl.git```
