@@ -9,7 +9,7 @@ The classification of the moviments is made by passing the captured image from t
 
 Installation
 ------------
-1. Clone this repository: ```https://github.com/icmc-data/kinect```
+1. Clone this repository: ``` git clone https://github.com/icmc-data/kinect```
 2. ```cd kinect/bomberman```
 3. Make sure you have `bower` and `simplehttpserver` installed: ```npm install -g bower simplehttpserver```
 3. Download dependencies: ```bower install```
